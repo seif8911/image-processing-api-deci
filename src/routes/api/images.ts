@@ -15,12 +15,12 @@ interface ImageQuery {
  */
 const validate = async (query: ImageQuery): Promise<null | string> => {
   // Check if requested file is available
-  if (!(await File.isImageAvailable(query.filename))) {
-    const availableImageNames: string = (
-      await File.getAvailableImageNames()
-    ).join(', ');
-    return `Please pass a valid filename in the 'filename' query segment. Available filenames are: ${availableImageNames}.`;
-  }
+  // if (!(await File.isImageAvailable(query.filename))) {
+  //   const availableImageNames: string = (
+  //     await File.getAvailableImageNames()
+  //   ).join(', ');
+  //   return `Please pass a valid filename in the 'filename' query segment. Available filenames are: ${availableImageNames}.`;
+  // }
 
   if (!query.width && !query.height) {
     return null; // No size values
@@ -74,9 +74,14 @@ images.get(
     if (path) {
       response.sendFile(path);
     } else {
-      response.send('This should not have happened :-D What did you do?');
+      response.send('This should not have happened :D What did you do?');
     }
   }
 );
+
+images.get('/list', async (req, res) => {
+  const images = await File.getAvailableImageNames();
+  res.json(images);
+});
 
 export default images;

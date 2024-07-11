@@ -1,6 +1,3 @@
-import sharp from 'sharp';
-
-// query segments
 interface sharpResizeParams {
   source: string;
   target: string;
@@ -8,27 +5,28 @@ interface sharpResizeParams {
   height: number;
 }
 
-/**
- * Process image via sharp.
- * @param {sharpResizeParams} params Parameters.
- * @param {string} params.source Source image path.
- * @param {string} params.target Target path.
- * @param {number} params.width Target width.
- * @param {number} params.height Target height.
- * @return {null|string} Error message or null.
- */
-const processImage = async (
-  params: sharpResizeParams
-): Promise<null | string> => {
-  try {
-    await sharp(params.source)
-      .resize(params.width, params.height)
-      .toFormat('jpeg')
-      .toFile(params.target);
-    return null;
-  } catch {
-    return 'Image could not be processed.';
+import sharp from 'sharp';
+import path from 'path';
+import fs from 'fs';
+
+const cacheDir = path.resolve(__dirname, '../assets/images/cache');
+
+const ensureCacheDir = () => {
+  if (!fs.existsSync(cacheDir)) {
+    fs.mkdirSync(cacheDir, { recursive: true });
   }
+};
+
+const processImage = async (
+  inputPath: string,
+  outputPath: string,
+  width: number,
+  height: number
+): Promise<void> => {
+  await sharp(inputPath)
+    .resize(width, height)
+    .toFormat('jpg')
+    .toFile(outputPath);
 };
 
 export default processImage;

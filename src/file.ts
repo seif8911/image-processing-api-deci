@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import processImage from './image-processing'; // Image handling
+import processImage from './image-processing'; // Assuming this function exists and is correctly implemented
 
-// query segments
+// Query segments
 interface ImageQuery {
   filename?: string;
   width?: string;
@@ -107,7 +107,7 @@ export default class File {
       await fs.access(File.imagesThumbPath);
       // Path already available
     } catch {
-      fs.mkdir(File.imagesThumbPath);
+      await fs.mkdir(File.imagesThumbPath);
     }
   }
 
@@ -117,11 +117,11 @@ export default class File {
    * @param {string} [params.filename] Filename.
    * @param {string} [params.width] Desired width.
    * @param {string} [params.height] Desired height.
-   * @return {null|string} Error message or null.
+   * @return {Promise<string | null>} Error message or null.
    */
-  static async createThumb(params: ImageQuery): Promise<null | string> {
+  static async createThumb(params: ImageQuery): Promise<string | null> {
     if (!params.filename || !params.width || !params.height) {
-      return null; // Nothing to do
+      return null; // Early return if required parameters are missing
     }
 
     const filePathFull: string = path.resolve(
@@ -135,12 +135,16 @@ export default class File {
 
     console.log(`Creating thumb ${filePathThumb}`);
 
-    // Resize original image and store as thumb
-    return await processImage({
-      source: filePathFull,
-      target: filePathThumb,
-      width: parseInt(params.width),
-      height: parseInt(params.height)
-    });
+    try {
+      await processImage(
+        filePathFull,
+        filePathThumb,
+        parseInt(params.width),
+        parseInt(params.height)
+      );
+      return null; // Return null on success
+    } catch (error) {
+      return error.message; // Return error message on failure
+    }
   }
 }
