@@ -1,7 +1,7 @@
 {
   "name": "image-processing-api",
-  "version": "1.0.1",
-  "description": "Starter project on Udacity",
+  "version": "1.0.0",
+  "description": "Image processing Web App project on Udacity, Deci NanoDegree",
   "main": "index.ts",
   "scripts": {
     "build": "npx tsc",
@@ -14,10 +14,12 @@
   "keywords": [
     "Udacity",
     "API",
-    "image"
+    "image",
+    "Deci",
+    "image-processing-api"
   ],
-  "author": "Oliver Tacke",
-  "license": "MIT",
+  "author": "Seif8911",
+  "license": "",
   "devDependencies": {
     "@types/core-js": "^2.5.8",
     "@types/express": "^4.17.13",
