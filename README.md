@@ -1,13 +1,13 @@
-### Scripts
+### Scripts to setup and test the project
 - **Install:** `npm install`
 - **Build:** `npm run build`
 - **Lint:** `npm run lint`
 - **Prettify:** `npm run prettify`
-- **Run unit tests:** `npm run test`
+- **Run jasmine tests:** `npm run test`
 - **Start server:** `npm run start`
 
 ### Usage
-The server listens on port 3000.
+The server runs on localhost:3000
 
 #### Access the Web App
 Open: [http://localhost:3000/](http://localhost:3000/)
@@ -16,7 +16,7 @@ Open: [http://localhost:3000/](http://localhost:3000/)
 Endpoint URL: [http://localhost:3000/api/images](http://localhost:3000/api/images)
 
 **Query Parameters:**
-- **filename**: Name of the image file (Available filenames: `encenadaport`, `fjord`, `icelandwaterfall`, `palmtunnel`, `santamonica`)
+- **filename**: Name of the image file 
 - **width**: Desired width in pixels (must be a positive number)
 - **height**: Desired height in pixels (must be a positive number)
 
@@ -26,7 +26,7 @@ Endpoint URL: [http://localhost:3000/api/images](http://localhost:3000/api/image
    ```
    http://localhost:3000/api/images
    ```
-   Displays a hint and lists available image names.
+   Displays a list of available image names.
 
 2. **Display original image:**
    ```
@@ -50,7 +50,7 @@ Endpoint URL: [http://localhost:3000/api/images](http://localhost:3000/api/image
    ```
    http://localhost:3000/api/images?filename=fjord&width=200
    ```
-   Displays a hint indicating the missing height parameter.
+   Displays a tip indicating the missing height parameter.
 
 ### Notes
 - Images are served from `assets/images/full`. Additional images can be placed in this directory, trying to add any file other than .jpg will result into an error and wont get uploaded.
