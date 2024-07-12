@@ -1,64 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Processing Web App</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <header>
-        <h1>Image Processing Web App</h1>
+      <h1>Image Processing Web App</h1>
     </header>
     <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" name="image" accept=".jpg">
-        <button type="submit">Upload</button>
+      <input type="file" id="fileInput" name="image" accept=".jpg" />
+      <button type="submit">Upload</button>
     </form>
     <form id="resizeForm">
-        <h2>Resize Image</h2>
-        <input type="text" id="imageNameInput" name="imageName" placeholder="Filename" required>
-        <input type="number" id="widthInput" name="width" min="1" placeholder="Width" required>
-        <input type="number" id="heightInput" name="height" min="1" placeholder="Height" required>
-        <button type="submit">Resize</button>
-        <p id="resizeResult"></p>
+      <h2>Resize Image</h2>
+      <input
+        type="text"
+        id="imageNameInput"
+        name="imageName"
+        placeholder="Filename"
+        required
+      />
+      <input
+        type="number"
+        id="widthInput"
+        name="width"
+        min="1"
+        placeholder="Width"
+        required
+      />
+      <input
+        type="number"
+        id="heightInput"
+        name="height"
+        min="1"
+        placeholder="Height"
+        required
+      />
+      <button type="submit">Resize</button>
+      <p id="resizeResult"></p>
+    </form>
     <main>
-
-      <section class="gallery">
-            <div class="image">
-                <img src="https://github.com/udacity/deci-l4-web-image-placeholder-app/blob/main/starter/images/encenadaport.jpg?raw=true" alt="Encenada Port">
-                <div class="image-info">
-                    <p>encenadaport</p>
-                </div>
-            </div>
-            <div class="image">
-                <img src="https://github.com/udacity/deci-l4-web-image-placeholder-app/blob/main/starter/images/fjord.jpg?raw=true" alt="Fjord">
-                <div class="image-info">
-                    <p>fjord</p>
-                </div>
-            </div>
-            <div class="image">
-                <img src="https://github.com/udacity/deci-l4-web-image-placeholder-app/blob/main/starter/images/icelandwaterfall.jpg?raw=true" alt="Iceland Waterfall">
-                <div class="image-info">
-                    <p>icelandwaterfall</p>
-                </div>
-            </div>
-            <div class="image">
-                <img src="https://github.com/udacity/deci-l4-web-image-placeholder-app/blob/main/starter/images/palmtunnel.jpg?raw=true" alt="Palm Tunnel">
-                <div class="image-info">
-                    <p>palmtunnel</p>
-                </div>
-            </div>
-            <div class="image">
-                <img src="https://github.com/udacity/deci-l4-web-image-placeholder-app/blob/main/starter/images/santamonica.jpg?raw=true" alt="Santa Monica">
-                <div class="image-info">
-                    <p>santamonica</p>
-                </div>
-            </div>
-        </section>
+      <section id="gallery" class="gallery"></section>
     </main>
     <footer>
-        <p>&copy; 2024 Seif8911 | Udacity. All rights reserved.</p>
+      <p>&copy; 2024 Seif8911 | Udacity. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
