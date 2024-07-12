@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import processImage from './image-processing'; // Assuming this function exists and is correctly implemented
-
+import processImage from './image-processing';
 interface ImageQuery {
   filename?: string;
   width?: string;
