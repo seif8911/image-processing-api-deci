@@ -1,58 +1,59 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import File from './../file';
+import File from '../file';
 
-describe('Test image processing via sharp', (): void => {
-  it('raises an error (invalid width value)', async (): Promise<void> => {
-    const error: null | string = await File.createThumb({
-      filename: 'foo',
+describe('Image Processing Tests using Sharp Library', () => {
+  it('should raise an error for invalid width value', async () => {
+    const error = await File.createThumb({
+      filename: 'doesntexist',
       width: '-100',
       height: '500'
     });
     expect(error).not.toBeNull();
   });
 
-  it('raises an error (filename does not exist)', async (): Promise<void> => {
-    const error: null | string = await File.createThumb({
-      filename: 'foo',
+  it('should raise an error for non-existent filename', async () => {
+    const error = await File.createThumb({
+      filename: 'nonexistent',
       width: '100',
       height: '500'
     });
     expect(error).not.toBeNull();
   });
 
-  // Note: Could also fail because of directory permissions
-  it('succeeds to write resized thumb file (existing file, valid size values)', async (): Promise<void> => {
-    await File.createThumb({ filename: 'fjord', width: '99', height: '99' });
+  it('should successfully create resized thumbnail for valid inputs', async () => {
+    await File.createThumb({
+      filename: 'fjord',
+      width: '150',
+      height: '165'
+    });
 
-    const resizedImagePath: string = path.resolve(
+    const resizedImagePath = path.resolve(
       File.imagesThumbPath,
-      `fjord-99x99.jpg`
+      `fjord-150x165.jpg`
     );
-    let errorFile: null | string = '';
+    let errorFile = null;
 
     try {
       await fs.access(resizedImagePath);
-      errorFile = null;
-    } catch {
-      errorFile = 'File was not created';
+    } catch (err) {
+      errorFile = 'Error: File was not created';
     }
 
     expect(errorFile).toBeNull();
   });
 });
 
-// Erase test file. Test should not run on productive system to avoid cache loss
-afterAll(async (): Promise<void> => {
-  const resizedImagePath: string = path.resolve(
+// Cleanup after tests
+afterAll(async () => {
+  const resizedImagePath = path.resolve(
     File.imagesThumbPath,
-    'fjord-99x99.jpg'
+    'fjord150x165.jpg'
   );
 
   try {
-    await fs.access(resizedImagePath);
-    fs.unlink(resizedImagePath);
-  } catch {
-    // intentionally left blank
+    await fs.unlink(resizedImagePath);
+  } catch (err) {
+    // Handle error if necessary
   }
 });

@@ -1,6 +1,5 @@
 import express from 'express';
 import routes from './routes/index';
-// import File from './file';
 import path from 'path';
 
 const app: express.Application = express();
@@ -14,10 +13,9 @@ app.use(routes);
 
 // Start server
 app.listen(port, async (): Promise<void> => {
-  // Make sure that thumb path is available
   // await File.createThumb();
 
-  const url: string = `\x1b[2mhttp://localhost:${port}\x1b[0m`;
+  const url: string = `http://localhost:${port}`;
   console.log(`Project Hosted at ${url}`);
 });
 

@@ -2,71 +2,62 @@ import supertest from 'supertest';
 import app from '../index';
 import { promises as fs } from 'fs';
 import path from 'path';
-import File from './../file';
+import File from '../file';
 
-const request: supertest.SuperTest<supertest.Test> = supertest(app);
+const request = supertest(app);
 
-describe('Test responses from endpoints', (): void => {
-  describe('endpoint: /', (): void => {
-    it('gets /', async (): Promise<void> => {
-      const response: supertest.Response = await request.get('/');
-
+describe('Testing API endpoints', () => {
+  describe('GET /', () => {
+    it('should return 200 OK', async () => {
+      const response = await request.get('/');
       expect(response.status).toBe(200);
     });
   });
 
-  describe('endpoint: /api/images', (): void => {
-    it('gets /api/images?filename=fjord (valid args)', async (): Promise<void> => {
-      const response: supertest.Response = await request.get(
-        '/api/images?filename=fjord'
-      );
-
+  describe('GET /api/images', () => {
+    it('should return 200 for valid filename', async () => {
+      const response = await request.get('/api/images?filename=fjord');
       expect(response.status).toBe(200);
     });
 
-    it('gets /api/images?filename=fjord&width=199&height=199 (valid args)', async (): Promise<void> => {
-      const response: supertest.Response = await request.get(
-        '/api/images?filename=fjord&width=199&height=199'
+    it('should return 200 for valid filename, width, and height', async () => {
+      const response = await request.get(
+        '/api/images?filename=fjord&width=195&height=350'
       );
-
       expect(response.status).toBe(200);
     });
 
-    it('gets /api/images?filename=fjord&width=-200&height=200 (invalid args)', async (): Promise<void> => {
-      const response: supertest.Response = await request.get(
-        '/api/images?filename=fjord&width=-200&height=200'
+    it('should return 200 even for invalid width', async () => {
+      const response = await request.get(
+        '/api/images?filename=fjord&width=-200&height=6'
       );
-
       expect(response.status).toBe(200);
     });
 
-    it('gets /api/images (no arguments)', async (): Promise<void> => {
-      const response: supertest.Response = await request.get('/api/images');
-
+    it('should return 200 for request without arguments', async () => {
+      const response = await request.get('/api/images');
       expect(response.status).toBe(200);
     });
   });
 
-  describe('endpoint: /foo', (): void => {
-    it('returns 404 for invalid endpoint', async (): Promise<void> => {
-      const response: supertest.Response = await request.get('/foo');
-
+  describe('GET /doesntexist', () => {
+    it('should return 404 for invalid endpoint', async () => {
+      const response = await request.get('/doesntexist');
       expect(response.status).toBe(404);
     });
   });
 });
 
-// Erase test file. Test should not run on productive system to avoid cache loss
-afterAll(async (): Promise<void> => {
-  const resizedImagePath: string = path.resolve(
+// Cleanup after tests
+afterAll(async () => {
+  const resizedImagePath = path.resolve(
     File.imagesThumbPath,
-    'fjord-199x199.jpg'
+    'fjord-299x299.jpg'
   );
 
   try {
-    await fs.access(resizedImagePath);
-    fs.unlink(resizedImagePath);
-  } catch {
-    // intentionally left blank
+    await fs.unlink(resizedImagePath);
+  } catch (err) {
+    // Handle error if necessary
   }
 });
