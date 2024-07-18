@@ -61,3 +61,5 @@ afterAll(async () => {
     // Handle error if necessary
   }
 });
+
+// somehow all of this isnt returning an error, i thought i failed as a dev 😭
